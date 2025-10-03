@@ -3,17 +3,16 @@ import logo from "../../assets/logo.png";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../store/userSlice";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { isLoggedIn } = useSelector((state) => state.user);
     const handleLogin = () => {
-        dispatch(
-            login({ name: "John Doe", email: "john@example.com", avatar: "" })
-        );
+        navigate('/signin');
     };
 
     const handleLogout = () => {

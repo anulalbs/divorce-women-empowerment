@@ -126,7 +126,7 @@
           border-bottom: .1rem solid #fff;
 
           a {
-            color: $highlight-text;
+            color: $highlight-color;
             font-weight: bold;
             text-transform: capitalize;
           }
@@ -151,6 +151,118 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 0.3rem;
+    }
+
+    input {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+
+      &:focus {
+        border-color: $primary-color;
+      }
+    }
+
+    .error {
+      color: red;
+      font-size: 0.85rem;
+    }
+  }
+
+  .btn-submit {
+    padding: 0.7rem;
+    border: none;
+    border-radius: 6px;
+    background: $primary-color;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: $primary-color;
+  }
+
+  label {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1rem;
+
+    &:focus {
+      border-color: $primary-color;
+    }
+  }
+
+  &.checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+      color: $primary-color;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      flex: 1;
+      padding: 0.6rem;
+      margin: 0 0.3rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &.btn-submit {
+        background: $primary-color;
+        color: #fff;
+
+        &:hover {
+          background: darken($primary-color, 10%);
+        }
+      }
+
+      &.btn-clear {
+        background: #eee;
+
+        &:hover {
+          background: #ddd;
+        }
+      }
+    }
   }
 }
 

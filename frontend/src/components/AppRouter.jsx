@@ -6,6 +6,8 @@ import Resources from "../pages/Resources";
 import Community from "../pages/Community";
 import Blog from "../pages/Blog";
 import DefaultLayout from "../layouts/default.layout";
+import Signup from "../pages/Signup/Signup";
+import Signin from "../pages/Signin/Signin";
 
 export default function AppRouter(){
     return (
@@ -17,6 +19,8 @@ export default function AppRouter(){
             <Route path="/resources" element={<Resources />} />
             <Route path="/community" element={<Community />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
             </Route>
           </Routes>
         </BrowserRouter>
