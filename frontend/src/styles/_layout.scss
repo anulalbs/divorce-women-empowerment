@@ -1,0 +1,190 @@
+@import "variables";
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .header {
+    background-color: $primary-color;
+    color: white;
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+
+      span {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      height: 100%;
+
+      a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        height: 100%;
+        padding: 18px 5px;
+
+        &.active {
+          border-bottom: 4px solid #000000;
+        }
+      }
+
+      .login-btn {
+        background: white;
+        color: $primary-color;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .user-menu {
+        position: relative;
+
+        .user-icon {
+          background: white;
+          color: $primary-color;
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+
+        .dropdown {
+          position: absolute;
+          right: 0;
+          top: 45px;
+          background: white;
+          color: $text-color;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          min-width: 150px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+          z-index: 1000;
+
+          a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: $text-color;
+            text-decoration: none;
+
+            &:hover {
+              background: $background-color;
+            }
+          }
+        }
+      }
+    }
+
+    // Hamburger menu for mobile
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    overflow: hidden; // prevent page scroll, keep content area scrolling
+
+    .sidebar {
+      width: $sidebar-width;
+      background-color: $secondary-color;
+      color: white;
+      flex-shrink: 0;
+      overflow-y: auto; // sidebar scrolls if items overflow
+
+      ul.list-unstyled {
+        li {
+          padding: .5rem;
+          border-bottom: .1rem solid #fff;
+
+          a {
+            color: $highlight-text;
+            font-weight: bold;
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+
+    .content {
+      flex: 1;
+      padding: 1rem;
+      background-color: $background-color;
+      color: $text-color;
+      overflow-y: auto; // content scrolls
+    }
+  }
+
+  .footer {
+    background-color: $primary-color;
+    color: white;
+    height: $footer-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+}
+
+// Responsive tweaks
+@media (max-width: 768px) {
+  .layout {
+    .header {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 0.5rem 1rem;
+
+      .nav-links {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        display: none;
+
+        &.open {
+          display: flex;
+        }
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    .body {
+      flex-direction: column;
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
