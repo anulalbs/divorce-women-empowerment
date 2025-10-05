@@ -8,6 +8,7 @@ import Blog from "../pages/Blog";
 import DefaultLayout from "../layouts/default.layout";
 import Signup from "../pages/Signup/Signup";
 import Signin from "../pages/Signin/Signin";
+import Users from "../pages/Users";
 
 export default function AppRouter(){
     return (
@@ -21,6 +22,7 @@ export default function AppRouter(){
             <Route path="/blog" element={<Blog />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/users" element={<Users />} />
             </Route>
           </Routes>
         </BrowserRouter>
