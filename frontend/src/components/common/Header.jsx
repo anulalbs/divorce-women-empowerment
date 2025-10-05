@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../../store/userSlice";
+import { logout } from "../../store/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -10,7 +10,7 @@ export default function Header() {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isLoggedIn } = useSelector((state) => state.user);
+    const { isLoggedIn, profile } = useSelector((state) => state.user);
     const handleLogin = () => {
         navigate('/signin');
     };
@@ -21,9 +21,11 @@ export default function Header() {
     };
     return (
         <header className="header">
-            <div className="brand"><img src={logo} alt="Logo" className="logo" />
-                <span>EmpowerHer</span>
-            </div>
+            <NavLink to="/">
+                <div className="brand"><img src={logo} alt="Logo" className="logo" />
+                    <span>EmpowerHer</span>
+                </div>
+            </NavLink>
             <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
                 ☰
             </div>
@@ -47,6 +49,7 @@ export default function Header() {
                         </div>
                         {userMenuOpen && (
                             <div className="dropdown">
+                                <a href="#" onclick="event.preventDefault();">{profile.fullname}</a>
                                 <a href="#">Profile</a>
                                 <a href="#" onClick={handleLogout}>Logout</a>
                             </div>

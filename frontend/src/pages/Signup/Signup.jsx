@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "./Signup.scss";
+import axiosClient from "../../api/axiosClient";
+import { useNavigate } from "react-router-dom";
 
 // ✅ Validation Schema
 const schema = yup.object().shape({
@@ -30,9 +32,12 @@ export default function Signup() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Signup Data:", data);
-    alert("Signup successful!");
+  const navigate = useNavigate();
+
+  const onSubmit = async(data) => {
+    const response = await axiosClient.post("/auth/signup", {...data, role: 'user'});
+    //TODO: handle errors
+    navigate("/signin");
   };
 
   return (

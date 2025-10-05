@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signin.scss";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/userSlice";
+import axiosClient from "../../api/axiosClient";
 
 // ✅ Validation Schema
 const schema = yup.object().shape({
@@ -29,13 +30,16 @@ export default function Signin() {
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
 
-    const onSubmit = (data) => {
-        console.log("Signin Data:", data);
-        alert("Signin successful!");
-        // Here you can dispatch redux login or call API
+    const onSubmit = async (data) => {
+        const {data: { token, user: {
+            id, fullname, email, isActive, location, phone, role
+        } }} = await axiosClient.post("/auth/signin", data);
+        //TODO: handle errors
         dispatch(
-            login({ name: "John Doe", email: "john@example.com", avatar: "" })
+            login({ id, fullname, email, isActive, location, phone, role })
         );
+        localStorage.setItem(`token`, token);
+        localStorage.setItem(`user`, JSON.stringify({ id, fullname, email, isActive, location, phone, role }));
         navigate("/");
     };
 
