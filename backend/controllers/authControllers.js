@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 export const signup = async (req, res) => {
   try {
-    const { fullname, email, phone, location, password } = req.body;
+    const { fullname, email, phone, location, password, role } = req.body;
 
     const existingUser = await User.findOne({ 
       $or: [{ email }, { phone }] 
@@ -14,7 +14,7 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      fullname, email, phone, location, password: hashedPassword,
+      fullname, email, phone, location, password: hashedPassword, role
     });
 
     res.status(201).json({ data: "Signup successful", user });

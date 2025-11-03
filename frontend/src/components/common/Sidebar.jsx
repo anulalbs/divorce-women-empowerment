@@ -15,14 +15,13 @@ export default function Sidebar() {
       <ul className="list-unstyled">
         <li><a href="#"><MdDashboardCustomize/> Dashboard</a></li>
         <li><a href="/users"><FaUsers/>  Users</a></li>
-        <li><a href="#"><GrResources/> Blog/Resources</a></li>
-        <li><a href="#"><MdEmojiEvents/> Events</a></li>
+        <li><a href="/blogs"><GrResources/> Blog/Resources</a></li>
         <li><a href="#"><MdForum/> Community/Forum</a></li>
         <li><a href="#"><TiMessages/> Messages</a></li>
-        <li><a href="#"><SiCodementor/> Mentors & Coaches</a></li>
-        <li><a href="#"><FaHandsHelping/> Legal Help</a></li>
+        <li><a href="/experts"><SiCodementor/> Experts</a></li>
+        {/* <li><a href="#"><FaHandsHelping/> Suggestions</a></li>
         <li><a href="#"><IoMdAnalytics/> Analytics</a></li>
-        <li><a href="#"><IoSettings/> Settings</a></li>
+        <li><a href="#"><IoSettings/> Settings</a></li> */}
         
       </ul>
     </aside>

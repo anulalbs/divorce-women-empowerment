@@ -1,0 +1,67 @@
+@import "../../styles/variables";
+
+.blog-list,
+.create-blog,
+.blog-detail {
+  //   max-width: 800px;
+  //   margin: 2rem auto;
+  //   padding: 1.5rem;
+  //   background: #fff;
+  //   border-radius: 10px;
+  //   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+  h2 {
+    //color: $primary-color;
+    //margin-bottom: 1rem;
+  }
+
+  .blog-card {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+
+    .author {
+      font-size: 0.9rem;
+      color: gray;
+    }
+
+    //.read-more { color: $primary-color; font-weight: bold; }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    input,
+    textarea {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 270px;
+      background: $primary-color;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background: darken($primary-color, 8%);
+      }
+    }
+  }
+
+  .tags {
+    span {
+      margin-right: 1rem;
+      background-color: $primary-color;
+      color: #fff;
+      padding: 2px 10px 4px;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+  }
+}

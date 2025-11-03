@@ -33,9 +33,9 @@ export default function Header() {
             <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
                 <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>
                 <NavLink to="/about" onClick={() => setMenuOpen(false)}>About</NavLink>
-                <NavLink to="/resources" onClick={() => setMenuOpen(false)}>Resources</NavLink>
+                {/* <NavLink to="/resources" onClick={() => setMenuOpen(false)}>Resources</NavLink> */}
                 <NavLink to="/community" onClick={() => setMenuOpen(false)}>Community</NavLink>
-                <NavLink to="/blog" onClick={() => setMenuOpen(false)}>Blog</NavLink>
+                <NavLink to="/blogs" onClick={() => setMenuOpen(false)}>Blogs</NavLink>
 
                 {!isLoggedIn ? (
                     <a href="#" onClick={handleLogin}>Login</a>

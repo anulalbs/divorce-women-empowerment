@@ -1,0 +1,47 @@
+.community-container {
+  max-width: 800px;
+  margin: auto;
+
+  .community-form {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+
+  .community-posts {
+    .card {
+      transition: all 0.2s;
+      &:hover {
+        transform: scale(1.01);
+      }
+    }
+  }
+}
+
+.comments {
+  .comment {
+    background: #f8f9fa;
+  }
+  .comment-form {
+    input {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+
+.comment-thread {
+  .comment-box {
+    background-color: #f9fafb;
+    .comment-meta {
+      font-size: 0.9rem;
+      strong {
+        color: #0d6efd;
+      }
+    }
+    input {
+      font-size: 0.85rem;
+    }
+  }
+}
+
