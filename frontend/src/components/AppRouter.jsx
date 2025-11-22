@@ -14,6 +14,7 @@ import CreateBlog from "../pages/Blogs/BlogCreate";
 import CommunityPage from "../pages/Community/Community";
 import Experts from "../pages/Experts/List";
 import CreateExpert from "../pages/Experts/Create";
+import Messages from "../pages/Messages";
 
 export default function AppRouter(){
     return (
@@ -33,6 +34,7 @@ export default function AppRouter(){
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/experts" element={<Experts />} />
             <Route path="/experts/create" element={<CreateExpert />} />
+            <Route path="/messages" element={<Messages />} />
             {/* <Route path="/create-blog" element={<ProtectedRoute><CreateBlog /></ProtectedRoute>} /> */}
 
             </Route>

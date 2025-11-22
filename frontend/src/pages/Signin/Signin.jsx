@@ -32,14 +32,14 @@ export default function Signin() {
 
     const onSubmit = async (data) => {
         const {data: { token, user: {
-            id, fullname, email, isActive, location, phone, role
+            _id, fullname, email, isActive, location, phone, role
         } }} = await axiosClient.post("/auth/signin", data);
         //TODO: handle errors
         dispatch(
-            login({ id, fullname, email, isActive, location, phone, role })
+            login({ _id, fullname, email, isActive, location, phone, role })
         );
         localStorage.setItem(`token`, token);
-        localStorage.setItem(`user`, JSON.stringify({ id, fullname, email, isActive, location, phone, role }));
+        localStorage.setItem(`user`, JSON.stringify({ _id, fullname, email, isActive, location, phone, role }));
         navigate("/");
     };
 

@@ -17,7 +17,7 @@ export default function Sidebar() {
         <li><a href="/users"><FaUsers/>  Users</a></li>
         <li><a href="/blogs"><GrResources/> Blog/Resources</a></li>
         <li><a href="#"><MdForum/> Community/Forum</a></li>
-        <li><a href="#"><TiMessages/> Messages</a></li>
+        <li><a href="/messages"><TiMessages/> Messages</a></li>
         <li><a href="/experts"><SiCodementor/> Experts</a></li>
         {/* <li><a href="#"><FaHandsHelping/> Suggestions</a></li>
         <li><a href="#"><IoMdAnalytics/> Analytics</a></li>
