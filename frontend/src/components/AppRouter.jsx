@@ -14,6 +14,8 @@ import CreateBlog from "../pages/Blogs/BlogCreate";
 import CommunityPage from "../pages/Community/Community";
 import Experts from "../pages/Experts/List";
 import CreateExpert from "../pages/Experts/Create";
+import ProtectedRoute from "./ProtectedRoute";
+import Unauthorized from "../pages/Unauthorized";
 import Messages from "../pages/Messages";
 
 export default function AppRouter(){
@@ -27,14 +29,19 @@ export default function AppRouter(){
             <Route path="/blog" element={<Blog />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
-            <Route path="/users" element={<Users />} />
+            {/* admin-only pages */}
+            <Route path="/users" element={<ProtectedRoute allowedRoles={["admin"]}><Users /></ProtectedRoute>} />
             <Route path="/blogs" element={<BlogList />} />
             <Route path="/blogs/:id" element={<BlogDetail />} />
-            <Route path="/blogs/create" element={<CreateBlog />} />
+            {/* allow admins and experts to create blogs */}
+            <Route path="/blogs/create" element={<ProtectedRoute allowedRoles={["admin","expert"]}><CreateBlog /></ProtectedRoute>} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/experts" element={<Experts />} />
-            <Route path="/experts/create" element={<CreateExpert />} />
-            <Route path="/messages" element={<Messages />} />
+            {/* only admins may create experts */}
+            <Route path="/experts/create" element={<ProtectedRoute allowedRoles={["admin"]}><CreateExpert /></ProtectedRoute>} />
+            {/* messages require login (any role) */}
+            <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
             {/* <Route path="/create-blog" element={<ProtectedRoute><CreateBlog /></ProtectedRoute>} /> */}
 
             </Route>
