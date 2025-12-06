@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from "../pages/Home";
-import About from "../pages/About";
+import Home from "../pages/Home/Home";
+import About from "../pages/About/About";
 import Resources from "../pages/Resources";
 import Blog from "../pages/Blog";
 import DefaultLayout from "../layouts/default.layout";
@@ -17,13 +17,15 @@ import CreateExpert from "../pages/Experts/Create";
 import ProtectedRoute from "./ProtectedRoute";
 import Unauthorized from "../pages/Unauthorized";
 import Messages from "../pages/Messages";
+import { useSelector } from "react-redux";
 
 export default function AppRouter(){
+  const { isLoggedIn } = useSelector((state) => state.user);
     return (
         <BrowserRouter>
           <Routes>
             <Route element={<DefaultLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={!isLoggedIn ? <Home />: <div>Dashboard</div>} />
             <Route path="/about" element={<About />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/blog" element={<Blog />} />

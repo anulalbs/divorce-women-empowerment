@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 // hero image: local copy (downloaded to src/assets/hero.jpg)
-import heroLocal from "../assets/hero.jpg";
+import heroLocal from "../../assets/hero.jpg";
 import "./Home.scss";
 
 export default function Home() {

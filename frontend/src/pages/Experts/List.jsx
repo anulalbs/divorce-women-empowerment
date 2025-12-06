@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataTable from 'react-data-table-component';
 import axiosClient from "../../api/axiosClient";
+import { useSelector } from "react-redux";
 
 
 function Experts() {
     const [users, setUsers] = useState([]);
+    const { profile } = useSelector((state) => state.user);
     const navigate = useNavigate();
     useEffect(()=>{
          async function fetchData() {
     const response = await axiosClient.get("/users/experts");
-    console.log("🚀 ~ fetchData ~ response:", response)
     setUsers(response.data.users);
   }
   fetchData();
@@ -49,7 +50,7 @@ function Experts() {
         <>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <h2 className="text-start">Experts</h2>
-            <button
+            {profile && profile.role === 'admin' && (<button
                 type="button"
                 onClick={() => navigate('/experts/create')}
                 style={{
@@ -62,7 +63,7 @@ function Experts() {
                 }}
             >
                 Add Expert
-            </button>
+            </button>)}
         </div>
         <DataTable
             columns={columns}

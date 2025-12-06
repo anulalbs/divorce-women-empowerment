@@ -31,24 +31,13 @@ export default function Header() {
             </div>
 
             <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-                <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>
+                {!isLoggedIn && <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>}
                 <NavLink to="/about" onClick={() => setMenuOpen(false)}>About</NavLink>
                 {/* <NavLink to="/resources" onClick={() => setMenuOpen(false)}>Resources</NavLink> */}
                 <NavLink to="/community" onClick={() => setMenuOpen(false)}>Community</NavLink>
                 <NavLink to="/blogs" onClick={() => setMenuOpen(false)}>Blogs</NavLink>
                 {isLoggedIn && (
                     <NavLink to="/messages" onClick={() => setMenuOpen(false)}>Messages</NavLink>
-                )}
-
-                {/* role specific links */}
-                {isLoggedIn && profile?.role === 'admin' && (
-                    <>
-                        <NavLink to="/users" onClick={() => setMenuOpen(false)}>Users</NavLink>
-                        <NavLink to="/experts/create" onClick={() => setMenuOpen(false)}>Create Expert</NavLink>
-                    </>
-                )}
-                {isLoggedIn && (profile?.role === 'admin' || profile?.role === 'expert') && (
-                    <NavLink to="/blogs/create" onClick={() => setMenuOpen(false)}>Create Blog</NavLink>
                 )}
 
                 {!isLoggedIn ? (

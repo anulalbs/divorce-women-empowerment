@@ -1,0 +1,17 @@
+.about-page h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.about-hero .lead {
+  font-size: 1.05rem;
+}
+
+.about-section + .about-section { margin-top: 18px; }
+
+.about-list { margin-top: 0.5rem; margin-left: 1.1rem; color: #333; }
+.about-list li { margin-bottom: 8px; }
+
+.about-cta { background: linear-gradient(90deg,#0d6efd11,#0d6efd08); }
+
+.card h5 { margin-bottom: 0.75rem; }
