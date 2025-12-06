@@ -15,7 +15,7 @@ export default function Sidebar() {
         <li><a href="/blogs"><GrResources /> Blog/Resources</a></li>
         <li><a href="#"><MdForum /> Community/Forum</a></li>
         <li><a href="/messages"><TiMessages /> Messages</a></li>
-        <li><a href="/experts"><SiCodementor /> Experts</a></li>
+        {profile&& profile.role !== "experts" &&<li><a href={`/${profile.role === "admin" ? "experts" : "experts/find"}`}><SiCodementor /> Experts</a></li>}
 
       </ul>
     </aside>

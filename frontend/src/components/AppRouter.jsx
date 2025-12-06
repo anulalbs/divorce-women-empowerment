@@ -13,7 +13,9 @@ import BlogDetail from "../pages/Blogs/BlogDetails";
 import CreateBlog from "../pages/Blogs/BlogCreate";
 import CommunityPage from "../pages/Community/Community";
 import Experts from "../pages/Experts/List";
+import ExpertDetails from "../pages/Experts/ExpertDetails";
 import CreateExpert from "../pages/Experts/Create";
+import ExpertsUsersView from "../pages/Experts/UsersView";
 import ProtectedRoute from "./ProtectedRoute";
 import Unauthorized from "../pages/Unauthorized";
 import Messages from "../pages/Messages";
@@ -39,6 +41,8 @@ export default function AppRouter(){
             <Route path="/blogs/create" element={<ProtectedRoute allowedRoles={["admin","expert"]}><CreateBlog /></ProtectedRoute>} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/experts" element={<Experts />} />
+            <Route path="/experts/find" element={<ExpertsUsersView />} />
+            <Route path="/experts/:id" element={<ExpertDetails />} />
             {/* only admins may create experts */}
             <Route path="/experts/create" element={<ProtectedRoute allowedRoles={["admin"]}><CreateExpert /></ProtectedRoute>} />
             {/* messages require login (any role) */}

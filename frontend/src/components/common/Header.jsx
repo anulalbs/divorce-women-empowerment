@@ -18,6 +18,7 @@ export default function Header() {
     const handleLogout = () => {
         dispatch(logout());
         setUserMenuOpen(false);
+         navigate('/');
     };
     return (
         <header className="header">

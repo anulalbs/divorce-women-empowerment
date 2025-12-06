@@ -35,6 +35,11 @@ export const signin = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
+    // Prevent login if the user's account has been deactivated by admin/moderation
+    if (user.isActive === false) {
+      return res.status(403).json({ message: "Account is currently inactive. Please contact support." });
+    }
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
     res.json({ data: "Signin successful", token, user });
   } catch (error) {

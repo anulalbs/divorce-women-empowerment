@@ -10,6 +10,7 @@ import blogRoutes from "./routes/blogRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 import initSocket from "./socket.js";
 import User from "./models/User.js";
 import Message from "./models/Message.js";
@@ -28,6 +29,7 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/community", communityRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/reports", reportRoutes);
 
 
 const httpServer = http.createServer(app);
