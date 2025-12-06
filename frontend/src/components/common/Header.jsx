@@ -53,8 +53,8 @@ export default function Header() {
                         </div>
                         {userMenuOpen && (
                             <div className="dropdown">
-                                <a href="#" onclick="event.preventDefault();">{profile.fullname}</a>
-                                <a href="#">Profile</a>
+                                <a href="#" onClick={(e) => e.preventDefault()}>{profile.fullname}</a>
+                                <a href="#" onClick={(e) => { e.preventDefault(); setUserMenuOpen(false); navigate('/profile'); }}>Profile</a>
                                 <a href="#" onClick={handleLogout}>Logout</a>
                             </div>
                         )}

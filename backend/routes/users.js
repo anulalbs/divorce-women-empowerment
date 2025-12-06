@@ -1,10 +1,15 @@
 import express from "express";
-import { getExperts, getUsers } from "../controllers/userControllers.js";
-
+import { getExperts, getUsers, getMe, updateMe, changePassword } from "../controllers/userControllers.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/", getUsers);
 router.get("/experts", getExperts);
+
+// auth protected profile endpoints
+router.get('/me', authMiddleware, getMe);
+router.patch('/me', authMiddleware, updateMe);
+router.patch('/me/password', authMiddleware, changePassword);
 
 export default router;

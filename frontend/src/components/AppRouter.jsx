@@ -16,6 +16,7 @@ import Experts from "../pages/Experts/List";
 import ExpertDetails from "../pages/Experts/ExpertDetails";
 import CreateExpert from "../pages/Experts/Create";
 import ExpertsUsersView from "../pages/Experts/UsersView";
+import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import Unauthorized from "../pages/Unauthorized";
 import Messages from "../pages/Messages";
@@ -45,6 +46,7 @@ export default function AppRouter(){
             <Route path="/experts/:id" element={<ExpertDetails />} />
             {/* only admins may create experts */}
             <Route path="/experts/create" element={<ProtectedRoute allowedRoles={["admin"]}><CreateExpert /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             {/* messages require login (any role) */}
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
             <Route path="/unauthorized" element={<Unauthorized />} />
