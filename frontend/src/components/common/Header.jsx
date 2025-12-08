@@ -3,6 +3,7 @@ import logo from "../../assets/logo.png";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/userSlice";
+import { disconnectSocket } from "../../utils/socket";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -16,9 +17,11 @@ export default function Header() {
     };
 
     const handleLogout = () => {
-        dispatch(logout());
-        setUserMenuOpen(false);
-         navigate('/');
+       // ensure socket disconnected when user logs out
+       try { disconnectSocket(); } catch (e) { /* ignore */ }
+       dispatch(logout());
+       setUserMenuOpen(false);
+        navigate('/');
     };
     return (
         <header className="header">

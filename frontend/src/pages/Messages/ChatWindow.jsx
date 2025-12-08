@@ -33,19 +33,22 @@ export default function ChatWindow({ otherUser }) {
     }
 
     // connection life-cycle events
-    socket.on("connect", () => {
+    const handleConnect = () => {
       console.log("[socket] client connected", socket.id);
       setConnectionStatus("connected");
-    });
-    socket.on("connect_error", (err) => {
+    };
+    const handleConnectError = (err) => {
       console.error("[socket] connect_error", err?.message || err);
       // if auth failed the server will reject handshake with error
       setConnectionStatus("auth_failed");
-    });
-    socket.on("disconnect", (reason) => {
+    };
+    const handleDisconnect = (reason) => {
       console.log("[socket] client disconnect", reason);
       setConnectionStatus("disconnected");
-    });
+    };
+    socket.on("connect", handleConnect);
+    socket.on("connect_error", handleConnectError);
+    socket.on("disconnect", handleDisconnect);
 
     // load existing conversation via REST
     let mounted = true;
@@ -67,7 +70,7 @@ export default function ChatWindow({ otherUser }) {
     load();
 
     // receive incoming messages — DEBUG: always append and print full msg
-    socket.on("private:receive", (msg) => {
+    const handleReceive = (msg) => {
       // also log id shapes used for matching
       try {
         console.log("debug ids -> sender._id:", msg.sender?._id, "receiver._id:", msg.receiver?._id, "userId:", userId, "otherUser._id:", otherUser?._id);
@@ -77,9 +80,11 @@ export default function ChatWindow({ otherUser }) {
       // Normalize id shapes (could be populated objects or plain ids)
       const senderId = msg.sender?._id || msg.sender;
       const receiverId = msg.receiver?._id || msg.receiver;
-      const isForThisConversation =
-        (senderId === otherUser?._id && receiverId === userId) ||
-        (senderId === userId && receiverId === otherUser?._id);
+      const sid = String(senderId);
+      const rid = String(receiverId);
+      const uid = String(userId);
+      const ouid = String(otherUser?._id);
+      const isForThisConversation = (sid === ouid && rid === uid) || (sid === uid && rid === ouid);
 
       if (isForThisConversation) {
         setMessages((m) => [...m, msg]);
@@ -87,27 +92,30 @@ export default function ChatWindow({ otherUser }) {
         // Ignore messages not for the active conversation (could show notifications elsewhere)
         console.log("private:receive - not for active conversation, ignoring");
       }
-    });
+    };
+    socket.on("private:receive", handleReceive);
 
     // typing indicator
-    socket.on("private:typing", ({ from, isTyping }) => {
+    const handleTyping = ({ from, isTyping }) => {
       setTypingUsers((prev) => ({ ...prev, [from]: isTyping }));
-    });
+    };
+    socket.on("private:typing", handleTyping);
 
     // presence updates (optional)
-    socket.on("presence:update", (p) => {
+    const handlePresence = (p) => {
       // use p.userId, p.status to show online/offline
       // you can store globally or in parent component
-    });
+    };
+    socket.on("presence:update", handlePresence);
 
     return () => {
       mounted = false;
-      socket.off("private:receive");
-      socket.off("private:typing");
-      socket.off("presence:update");
-      socket.off("connect");
-      socket.off("connect_error");
-      socket.off("disconnect");
+  socket.off("private:receive", handleReceive);
+  socket.off("private:typing", handleTyping);
+  socket.off("presence:update", handlePresence);
+  socket.off("connect", handleConnect);
+  socket.off("connect_error", handleConnectError);
+  socket.off("disconnect", handleDisconnect);
       // do not disconnect socket here if shared globally; if per user, disconnect
       // disconnectSocket();
     };
