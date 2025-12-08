@@ -73,4 +73,31 @@ router.post("/:id/like", authMiddleware, async (req, res) => {
   }
 });
 
+// Edit a comment (only the author or an admin)
+router.patch('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { content } = req.body;
+    const comment = await Comment.findById(req.params.id);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
+
+    // Only the author or an admin can edit the comment
+    if (String(comment.author) !== String(req.user._id) && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized to edit this comment' });
+    }
+
+    if (!content || typeof content !== 'string') {
+      return res.status(400).json({ message: 'Invalid content' });
+    }
+
+    comment.content = content;
+    await comment.save();
+
+    // return populated comment
+    const populated = await comment.populate('author', 'fullname email');
+    res.json(populated);
+  } catch (err) {
+    res.status(500).json({ message: 'Error editing comment', error: err.message });
+  }
+});
+
 export default router;
