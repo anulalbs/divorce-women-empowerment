@@ -107,6 +107,7 @@ const CommunityPage = () => {
           <CommentThread
             postId={p._id}
             comments={p.comments}
+            postAuthor={p.author?._id}
             onCommentAdded={fetchPosts}
           />
         </div>

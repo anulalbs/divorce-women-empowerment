@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "../../api/axiosClient";
 import { useSelector } from "react-redux";
 
-const CommentThread = ({ postId, comments = [], onCommentAdded }) => {
+const CommentThread = ({ postId, comments = [], onCommentAdded, postAuthor }) => {
   const [replyInputs, setReplyInputs] = useState({});
   const [editing, setEditing] = useState(null); // comment id being edited
   const [editInputs, setEditInputs] = useState({});
@@ -50,6 +50,17 @@ const CommentThread = ({ postId, comments = [], onCommentAdded }) => {
     }
   };
 
+  const deleteComment = async (commentId) => {
+    const ok = window.confirm("Delete this comment and all its replies?");
+    if (!ok) return;
+    try {
+      await axios.delete(`/comments/${commentId}`);
+      onCommentAdded();
+    } catch (err) {
+      console.error("Error deleting comment", err?.response || err.message);
+    }
+  };
+
   return (
     <div className="comment-thread">
       {comments.map((c) => (
@@ -94,6 +105,12 @@ const CommentThread = ({ postId, comments = [], onCommentAdded }) => {
                 {profile && (String(profile._id) === String(c.author?._id) || profile.role === "admin") && (
                   <span className="ms-2 text-primary" role="button" onClick={() => startEdit(c)}>
                     Edit
+                  </span>
+                )}
+                {/* Delete allowed for post author, comment author, or admin */}
+                {profile && (String(profile._id) === String(postAuthor) || String(profile._id) === String(c.author?._id) || profile.role === "admin") && (
+                  <span className="ms-2 text-danger" role="button" onClick={() => deleteComment(c._id)}>
+                    Delete
                   </span>
                 )}
           </div>

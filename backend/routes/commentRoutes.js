@@ -1,5 +1,6 @@
 import express from "express";
 import Comment from "../models/Comment.js";
+import CommunityPost from "../models/CommunityPost.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import mongoose from "mongoose";
 
@@ -97,6 +98,40 @@ router.patch('/:id', authMiddleware, async (req, res) => {
     res.json(populated);
   } catch (err) {
     res.status(500).json({ message: 'Error editing comment', error: err.message });
+  }
+});
+
+// Delete a comment and its nested replies
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.id);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
+
+    // load post to check post owner
+    const post = await CommunityPost.findById(comment.post);
+    // allow if comment author, post author, or admin
+    const isCommentAuthor = String(comment.author) === String(req.user._id);
+    const isPostAuthor = post && String(post.author) === String(req.user._id);
+    const isAdmin = req.user.role === 'admin';
+
+    if (!isCommentAuthor && !isPostAuthor && !isAdmin) {
+      return res.status(403).json({ message: 'Not authorized to delete this comment' });
+    }
+
+    // recursive delete
+    const deleteRecursively = async (commentId) => {
+      const replies = await Comment.find({ parentComment: commentId }).lean();
+      for (const r of replies) {
+        await deleteRecursively(r._id);
+      }
+      await Comment.findByIdAndDelete(commentId);
+    };
+
+    await deleteRecursively(comment._id);
+
+    res.json({ message: 'Comment and replies deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting comment', error: err.message });
   }
 });
 
