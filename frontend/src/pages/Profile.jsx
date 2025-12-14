@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../api/axiosClient';
-import { useSelector } from 'react-redux';
 import Toast from '../components/common/Toast';
 
 export default function Profile() {
-  const { profile } = useSelector((s) => s.user || {});
-  const [user, setUser] = useState(null);
+  const [setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
@@ -73,7 +71,7 @@ export default function Profile() {
 
   return (
     <div className="container py-4">
-  <h2 className="text-start">My Profile</h2>
+  <h2 className="text-start">Profile</h2>
       <Toast msg={msg} onClose={() => setMsg(null)} />
       <div className="card p-3 mb-3">
         <form onSubmit={updateProfile}>

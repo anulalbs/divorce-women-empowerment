@@ -11,7 +11,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <ul className="list-unstyled">
-        {profile && profile.role === "admin" && (<><li><a href="#"><MdDashboardCustomize /> Dashboard</a></li><li><a href="/users"><FaUsers />  Users</a></li></>)}
+  {profile && profile.role === "admin" && (<><li><a href="/dashboard"><MdDashboardCustomize /> Dashboard</a></li><li><a href="/users"><FaUsers />  Users</a></li></>)}
         <li><a href="/blogs"><GrResources /> Blog/Resources</a></li>
   <li><a href="/community"><MdForum /> Community</a></li>
         <li><a href="/messages"><TiMessages /> Messages</a></li>

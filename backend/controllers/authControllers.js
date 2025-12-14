@@ -41,6 +41,14 @@ export const signin = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    // update lastLogin timestamp
+    try {
+      user.lastLogin = new Date();
+      await user.save();
+    } catch (err) {
+      console.warn('Failed to update lastLogin for user', err?.message || err);
+    }
+
     res.json({ data: "Signin successful", token, user });
   } catch (error) {
     res.status(500).json({ error: error.message });

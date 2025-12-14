@@ -51,6 +51,11 @@ const userSchema = new mongoose.Schema(
       default: true,
       description: "Active status",
     },
+    lastLogin: {
+      type: Date,
+      default: null,
+      description: "Timestamp of last successful login",
+    },
     createdDate: {
       type: Date,
       required: true,

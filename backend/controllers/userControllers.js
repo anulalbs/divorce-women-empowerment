@@ -47,6 +47,19 @@ export const getExperts = async (req, res) => {
     }
 };
 
+export const getRecentLogins = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 5;
+        const users = await User.find({ lastLogin: { $ne: null } })
+            .sort({ lastLogin: -1 })
+            .limit(limit)
+            .select('fullname email lastLogin');
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export const getMe = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).select("-password");

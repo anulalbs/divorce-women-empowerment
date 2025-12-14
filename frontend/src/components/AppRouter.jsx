@@ -8,6 +8,7 @@ import DefaultLayout from "../layouts/default.layout";
 import Signup from "../pages/Signup/Signup";
 import Signin from "../pages/Signin/Signin";
 import Users from "../pages/Users";
+import Dashboard from "../pages/Dashboard";
 import BlogList from "../pages/Blogs/BlogList";
 import BlogDetail from "../pages/Blogs/BlogDetails";
 import CreateBlog from "../pages/Blogs/BlogCreate";
@@ -23,12 +24,23 @@ import Messages from "../pages/Messages";
 import { useSelector } from "react-redux";
 
 export default function AppRouter(){
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn, profile } = useSelector((state) => state.user);
     return (
         <BrowserRouter>
           <Routes>
             <Route element={<DefaultLayout />}>
-            <Route path="/" element={!isLoggedIn ? <Home />: <div>Dashboard</div>} />
+            <Route
+              path="/"
+              element={
+                !isLoggedIn ? (
+                  <Home />
+                ) : profile && profile.role === "admin" ? (
+                  <Dashboard />
+                ) : (
+                  <Profile/>
+                )
+              }
+            />
             <Route path="/about" element={<About />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/blog" element={<Blog />} />
@@ -36,6 +48,7 @@ export default function AppRouter(){
             <Route path="/signin" element={<Signin />} />
             {/* admin-only pages */}
             <Route path="/users" element={<ProtectedRoute allowedRoles={["admin"]}><Users /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["admin"]}><Dashboard /></ProtectedRoute>} />
             <Route path="/blogs" element={<BlogList />} />
             <Route path="/blogs/:id" element={<BlogDetail />} />
             {/* allow admins and experts to create blogs */}

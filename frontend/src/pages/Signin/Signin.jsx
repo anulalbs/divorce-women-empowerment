@@ -6,6 +6,8 @@ import "./Signin.scss";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/userSlice";
 import axiosClient from "../../api/axiosClient";
+import Toast from "../../components/common/Toast";
+import { useState } from "react";
 
 // ✅ Validation Schema
 const schema = yup.object().shape({
@@ -22,6 +24,7 @@ const schema = yup.object().shape({
 });
 
 export default function Signin() {
+    const [toast, setToast] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
@@ -31,16 +34,28 @@ export default function Signin() {
     } = useForm({ resolver: yupResolver(schema) });
 
     const onSubmit = async (data) => {
-        const {data: { token, user: {
-            _id, fullname, email, isActive, location, phone, role
-        } }} = await axiosClient.post("/auth/signin", data);
-        //TODO: handle errors
-        dispatch(
-            login({ _id, fullname, email, isActive, location, phone, role })
-        );
-        localStorage.setItem(`token`, token);
-        localStorage.setItem(`user`, JSON.stringify({ _id, fullname, email, isActive, location, phone, role }));
-        navigate("/");
+        try {
+            const res = await axiosClient.post("/auth/signin", data);
+            // server returns { data: "Signin successful", token, user }
+            const token = res.data?.token;
+            const user = res.data?.user || res.data;
+
+            if (!token || !user) {
+                throw new Error("Invalid server response");
+            }
+
+            const { _id, fullname, email, isActive, location, phone, role } = user;
+
+            dispatch(
+                login({ _id, fullname, email, isActive, location, phone, role })
+            );
+            localStorage.setItem(`token`, token);
+            localStorage.setItem(`user`, JSON.stringify({ _id, fullname, email, isActive, location, phone, role }));
+            navigate("/");
+        } catch (err) {
+            const message = err?.response?.data?.message || err?.response?.data?.error || err?.message || 'Signin failed';
+            setToast({ type: 'error', text: message });
+        }
     };
 
     return (
@@ -66,6 +81,7 @@ export default function Signin() {
             <p className="signup-link">
                 Don’t have an account? <Link to="/signup">Sign Up</Link>
             </p>
+            <Toast msg={toast} onClose={() => setToast(null)} />
         </div>
     );
 }
