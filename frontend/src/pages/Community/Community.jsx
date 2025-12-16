@@ -74,7 +74,7 @@ const CommunityPage = () => {
           value={form.tags}
           onChange={(e) => setForm({ ...form, tags: e.target.value })}
         />
-        <button className="btn btn-primary" type="submit">
+        <button style={{ width: '200px' }} className="btn btn-primary  btn-sm" type="submit">
           Post
         </button>
       </form>
